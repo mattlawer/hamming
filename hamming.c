@@ -5,7 +5,7 @@
 
 int main (int argc, char *argv[], char *arge[]) {
     
-    printf("Hello Hamming")
+    printf("Hello Hamming");
     
     return 0;
 }
