@@ -7,3 +7,6 @@ TODO
 implémentation en C<br />
 commenter le souce au maximum<br />
 finalisation des documentations<br />
+
+
+fix for message length [12-16]
