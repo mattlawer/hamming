@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include <time.h>
 
 int check_binary(char *string);
-int power_of_2 (int x);
+int power_of_2(int x);
 void add_parity_space(char *string);
 void remove_parity_space(char *string);
 void calculate_parity(char *string);
 void alter_a_bit(char* string);
 int *bad_parity(char* string);
-
 
 void print_usage (void) {
 	printf("usage: hamming <binary string>\n");
@@ -34,8 +34,10 @@ int main (int argc, char *argv[], char *arge[]) {
 	srand(time(NULL));
 	
 	// copy the argv[1] message
+	// message lengh is len+ceil(log2(len)) for parity bits
+	// so we don't need to realloc it everytime
 	int len = strlen(argv[1]);
-	char *message = (char*)malloc(len*sizeof(char));
+	char *message = (char*)malloc(len+ceil(log2(len))*sizeof(char));
 	strncpy(message, argv[1], len);
 	
 	// print the raw binary message
@@ -45,7 +47,7 @@ int main (int argc, char *argv[], char *arge[]) {
 	// and calculate them
 	add_parity_space(message);
 	calculate_parity(message);
-	printf("[•] parity_ok  '%s' (len:%d)\n",message,(int)strlen(message));
+	printf("[•] sent       '%s' (len:%d)\n",message,(int)strlen(message));
 	
 	// copy the message and alter one bit
 	char *bad = (char*)malloc(strlen(message)*sizeof(char));
@@ -58,13 +60,14 @@ int main (int argc, char *argv[], char *arge[]) {
 	// check parity to correct the altered message
 	int *bad_bits = bad_parity(bad);
 	int i = 0, sum=0;
-	printf("[?] corrupted bits :");
+	printf("[?] corrupted parity bits :");
 	while (bad_bits[i] != -1) {
 		sum+=bad_bits[i]+1;
 		printf(" %d",bad_bits[i]+1);
 		i++;
 	}
 	printf("\n");
+	printf("[?] fixed data bit at index %d\n",sum);
 	free(bad_bits);
 	
 	// correct if necessary
@@ -104,14 +107,15 @@ int power_of_2 (int x) {
 }
 
 void add_parity_space(char *string) {
-	int i = 0;
-	for (i=0; i<strlen(string); i++) {
+	int i = 0, len=strlen(string);
+	for (i=0; i<len; i++) {
 		if (power_of_2(i+1)) {
-			realloc(string, (strlen(string)+1)*sizeof(char));
-			for (int j = strlen(string) ; j>i; j--) {
+			len+=1;
+			for (int j = len-1 ; j>i; j--) {
 				string[j]=string[j-1];
 			}
 			string[i]='0';
+			string[len] = '\0';
 		}
 	}
 }
@@ -133,7 +137,6 @@ void remove_parity_space(char *string) {
 			string[i]='\0';
 	}
 	free(data);
-	realloc(string, j*sizeof(char));
 }
 
 void calculate_parity(char *string) {
