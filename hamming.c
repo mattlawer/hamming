@@ -48,7 +48,7 @@ int main (int argc, char *argv[], char *arge[]) {
 	printf("[•] parity_ok  '%s' (len:%d)\n",message,(int)strlen(message));
 	
 	// copy the message and alter one bit
-	char *bad = (char*)malloc(len*sizeof(char));
+	char *bad = (char*)malloc(strlen(message)*sizeof(char));
 	strncpy(bad, message, strlen(message));
 	alter_a_bit(bad);
 	
@@ -57,10 +57,14 @@ int main (int argc, char *argv[], char *arge[]) {
 	
 	// check parity to correct the altered message
 	int *bad_bits = bad_parity(bad);
-	int i, sum=0;
-	for (i = 0; i < 2; i++) {
+	int i = 0, sum=0;
+	printf("[?] corrupted bits :");
+	while (bad_bits[i] != -1) {
 		sum+=bad_bits[i]+1;
+		printf(" %d",bad_bits[i]+1);
+		i++;
 	}
+	printf("\n");
 	free(bad_bits);
 	
 	// correct if necessary
@@ -103,7 +107,7 @@ void add_parity_space(char *string) {
 	int i = 0;
 	for (i=0; i<strlen(string); i++) {
 		if (power_of_2(i+1)) {
-			realloc(string, strlen(string)+1);
+			realloc(string, (strlen(string)+1)*sizeof(char));
 			for (int j = strlen(string) ; j>i; j--) {
 				string[j]=string[j-1];
 			}
@@ -161,7 +165,7 @@ void alter_a_bit(char* string) {
 
 int *bad_parity(char* string) {
 	int i=0, j=0, len=strlen(string);
-	int *bad_parity = (int *)malloc(2*sizeof(int));
+	int *bad_parity = (int *)malloc(sizeof(int));
 	char *check = (char*)malloc(len*sizeof(char));
 	
 	bad_parity[0] = bad_parity[1] = -1;
@@ -172,7 +176,9 @@ int *bad_parity(char* string) {
 	// compare all parity bits
 	for(i=0; i<len; i++) {
 		if (power_of_2(i+1) && string[i] != check[i]) {
+			realloc(bad_parity, j+1*sizeof(int));
 			bad_parity[j] = i;
+			bad_parity[j+1] = -1;
 			j++;
 		}
 	}
