@@ -31,13 +31,13 @@ On commence par prendre notre mot de départ, ici `1001010010` puis on lui ajout
 Chaque bit de parité, aux emplacements 1, 2, 4, 8, 16, 32 ... calculent la parité de la manière suivante.<br />
 Soit x la position du bit de parité, on calcule la somme de x bits tout les 2*x bits<br />
 Exemple :<br />
-Pour le bit de parité 1 :  <font color='red'>?</font>?<font color='red'>1</font>?<font color='red'>0</font>0<font color='red'>1</font>?<font color='red'>0</font>1<font color='red'>0</font>0<font color='red'>1</font>0 soit 1+0+1+0+0+1=3, 3 est impair, le bit de parité est mis à 1<br />
-Pour le bit de parité 2 :  1<font color='red'>?1</font>?0<font color='red'>01</font>?0<font color='red'>10</font>01<font color='red'>0</font> soit 1+0+1+1+0+0=3, 3 est impair, le bit de parité est mis à 1<br />
-Pour le bit de parité 4 :  111<font color='red'>?001</font>?010<font color='red'>010</font> soit 0+0+1+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
-Pour le bit de parité 8 :  1110001<font color='red'>?010010</font> soit 0+1+0+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
+Pour le bit de parité 1 :  <b>?</b>?<b>1</b>?<b>0</b>0<b>1</b>?<b>0</b>1<b>0</b>0<b>1</b>0 soit 1+0+1+0+0+1=3, 3 est impair, le bit de parité est mis à 1<br />
+Pour le bit de parité 2 :  1<b>?1</b>?0<b>01</b>?0<b>10</b>01<b>0</b> soit 1+0+1+1+0+0=3, 3 est impair, le bit de parité est mis à 1<br />
+Pour le bit de parité 4 :  111<b>?001</b>?010<b>010</b> soit 0+0+1+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
 Pour le bit de parité 8 :  1110001<b>?010010</b> soit 0+1+0+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
-résultat : <font color='red'>11</font>1<font color='red'>0</font>001<font color='red'>0</font>010010 (parité en rouge et données en noir)
+Pour le bit de parité 8 :  1110001<b>?010010</b> soit 0+1+0+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
+résultat : <b>11</b>1<b>0</b>001<b>0</b>010010 (parité en rouge et données en noir)
 #### correction d'un mot reçu
-Pour la correction d'un mot on vérifie ses bits de parité, admettons que nous avons reçu 11100<font color='red'>1</font>10010010,<br />On recalcule les bits de parité, P1=0, P2=1, P4=1, P8=0, on remarque que les bits de parité 2 et 4 sont incorrects, on peux alors corriger le bit à l'emplacement 2+4 pour retrouver 11100<font color='red'>0</font>10010010.<br />
+Pour la correction d'un mot on vérifie ses bits de parité, admettons que nous avons reçu 11100<b>1</b>10010010,<br />On recalcule les bits de parité, P1=0, P2=1, P4=1, P8=0, on remarque que les bits de parité 2 et 4 sont incorrects, on peux alors corriger le bit à l'emplacement 2+4 pour retrouver 11100<b>0</b>10010010.<br />
 #### suppression des bits de parité
-On supprime tous les bits aux emplacements puissances de 2 <font color='red'>11</font>1<font color='red'>0</font>001<font color='red'>0</font>010010 pour retrouver `1001010010`.
+On supprime tous les bits aux emplacements puissances de 2 <b>11</b>1<b>0</b>001<b>0</b>010010 pour retrouver `1001010010`.
