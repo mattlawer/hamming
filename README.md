@@ -39,4 +39,4 @@ résultat : <b>11</b>1<b>0</b>001<b>0</b>010010 (parité en rouge et données en
 #### correction d'un mot reçu
 Pour la correction d'un mot on vérifie ses bits de parité, admettons que nous avons reçu 11100<b>1</b>10010010,<br />On recalcule les bits de parité, P1=0, P2=1, P4=1, P8=0, on remarque que les bits de parité 2 et 4 sont incorrects, on peux alors corriger le bit à l'emplacement 2+4 pour retrouver 11100<b>0</b>10010010.<br />
 #### suppression des bits de parité
-On supprime tous les bits aux emplacements puissances de 2 <b>11</b>1<b>0</b>001<b>0</b>010010 pour retrouver `1001010010`.
+On supprime tous les bits aux emplacements puissances de 2, <b>11</b>1<b>0</b>001<b>0</b>010010 pour retrouver `1001010010`.
