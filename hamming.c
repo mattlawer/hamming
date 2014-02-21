@@ -109,11 +109,11 @@ int power_of_2 (int x) {
 }
 
 void add_parity_space(char *string) {
-	int i = 0, len=strlen(string);
+	int i,j, len=strlen(string);
 	for (i=0; i<len; i++) {
 		if (power_of_2(i+1)) {
 			len+=1;
-			for (int j = len-1 ; j>i; j--) {
+			for (j = len-1 ; j>i; j--) {
 				string[j]=string[j-1];
 			}
 			string[i]='0';
@@ -127,7 +127,8 @@ void remove_parity_space(char *string) {
 	char *data = (char*)malloc(sizeof(char));
 	for (i=0; i<strlen(string); i++) {
 		if (!power_of_2(i+1)) {
-			realloc(data, j+1*sizeof(char));
+			char *tmp = (char *)realloc(data, j+1*sizeof(char));
+			if (tmp) {data = tmp;}
 			data[j]=string[i];
 			j++;
 		}
@@ -181,7 +182,8 @@ int *bad_parity(char* string) {
 	// compare all parity bits
 	for(i=0; i<len; i++) {
 		if (power_of_2(i+1) && string[i] != check[i]) {
-			realloc(bad_parity, j+1*sizeof(int));
+			int *tmp = (int *)realloc(bad_parity, j+1*sizeof(int));
+			if (tmp) {bad_parity = tmp;}
 			bad_parity[j] = i;
 			bad_parity[j+1] = -1;
 			j++;
