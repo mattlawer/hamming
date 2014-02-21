@@ -13,7 +13,7 @@ $ `./hamming "1001010010"` # lance l'exécution avec la chaine "1001010010" à c
 
 résultat
 =======
-	./hamming "1001010010"
+	$ ./hamming "1001010010"
 	[•] encoding   '1001010010' (len:10)
 	[•] sent       '11100010010010' (len:14)
 	[•] recieve    '11100110010010' (len:14)
@@ -35,7 +35,7 @@ Pour le bit de parité 1 :  <b>?</b>?<b>1</b>?<b>0</b>0<b>1</b>?<b>0</b>1<b>0</b
 Pour le bit de parité 2 :  1<b>?1</b>?0<b>01</b>?0<b>10</b>01<b>0</b> soit 1+0+1+1+0+0=3, 3 est impair, le bit de parité est mis à 1<br />
 Pour le bit de parité 4 :  111<b>?001</b>?010<b>010</b> soit 0+0+1+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
 Pour le bit de parité 8 :  1110001<b>?010010</b> soit 0+1+0+0+1+0=2, 2 est pair, le bit de parité est mis à 0<br />
-résultat : <b>11</b>1<b>0</b>001<b>0</b>010010 (parité en gras et données en noir)
+résultat : <b>11</b>1<b>0</b>001<b>0</b>010010 (parité en gras et données en normal)
 #### correction d'un mot reçu
 Pour la correction d'un mot on vérifie ses bits de parité, admettons que nous avons reçu 11100<b>1</b>10010010,<br />On recalcule les bits de parité, P1=0, P2=1, P4=1, P8=0, on remarque que les bits de parité 2 et 4 sont incorrects, on peux alors corriger le bit à l'emplacement 2+4 pour retrouver 11100<b>0</b>10010010.<br />
 #### suppression des bits de parité

@@ -5,6 +5,8 @@
 #include <math.h>
 #include <time.h>
 
+#define MAX(X, Y) ((X > Y) ? X : Y)
+
 int check_binary(char *string);
 int power_of_2(int x);
 void add_parity_space(char *string);
@@ -37,7 +39,7 @@ int main (int argc, char *argv[], char *arge[]) {
 	// message lengh is len+ceil(log2(len)) for parity bits
 	// so we don't need to realloc it everytime
 	int len = strlen(argv[1]);
-	char *message = (char*)malloc(len+ceil(log2(len))*sizeof(char));
+	char *message = (char*)malloc(len+MAX(ceil(log2(len)),3)*sizeof(char));
 	strncpy(message, argv[1], len);
 	
 	// print the raw binary message
