@@ -36,11 +36,20 @@ int main (int argc, char *argv[], char *arge[]) {
 	srand(time(NULL));
 	
 	// copy the argv[1] message
-	// message lengh is len+ceil(log2(len)) for parity bits
+	// calculate final message length
 	// so we don't need to realloc it everytime
 	int len = strlen(argv[1]);
-	char *message = (char*)malloc(len+MAX(ceil(log2(len)),3)*sizeof(char));
-	strncpy(message, argv[1], len);
+    int parity_len = 2;
+    for (int i = 0; i<=len; i++) {
+        //printf("t:%d - %s\n",t,power_of_2(t+1) ? "YES" : "NO");
+        parity_len++;
+        if (power_of_2(parity_len)) {
+            parity_len++;
+        }
+    }
+    printf("F2^%d -> F2^%d\n",len, parity_len-1);
+	char *message = (char*)malloc(parity_len*sizeof(char));
+	strncpy(message, argv[1], len+1);
 	
 	// print the raw binary message
 	printf("[•] encoding   '%s' (len:%d)\n",message,len);
@@ -85,7 +94,10 @@ int main (int argc, char *argv[], char *arge[]) {
 	printf("[•] decoding   '%s' (len:%d)\n",bad,(int)strlen(bad));
 	
 	// compare with original message
-	printf("[•] %s\n",strcmp(argv[1],bad) == 0 ? "message successfully decoded" : "failed to decode message");
+	printf("[•] %s\n",strncmp(argv[1],bad,len) == 0 ? "message successfully decoded" : "failed to decode message");
+    
+    //printf(" in: '%s'\n",argv[1]);
+    //printf("out: '%s'\n",bad);
 	
 	// free memory space
 	free(message);
@@ -124,11 +136,9 @@ void add_parity_space(char *string) {
 
 void remove_parity_space(char *string) {
 	int i = 0, j=0;
-	char *data = (char*)malloc(sizeof(char));
+	char *data = (char*)malloc(strlen(string)*sizeof(char));
 	for (i=0; i<strlen(string); i++) {
 		if (!power_of_2(i+1)) {
-			char *tmp = (char *)realloc(data, j+1*sizeof(char));
-			if (tmp) {data = tmp;}
 			data[j]=string[i];
 			j++;
 		}
